@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import '../models/modulo.dart';
 import 'package:provider/provider.dart';
+import '../data/conquistas_data.dart';
+import '../models/modulo.dart';
 import '../providers/progresso_provider.dart';
+import '../widgets/conquista_dialog.dart';
 
 class QuizScreen extends StatefulWidget {
   final Modulo modulo;
@@ -19,6 +21,9 @@ class _QuizScreenState extends State<QuizScreen> {
   bool _respondeu = false;
   bool _finalizado = false;
 
+  int _sequenciaAtual = 0;
+  int _maiorSequencia = 0;
+
   void _responder(int index) {
     if (_respondeu) return;
 
@@ -28,24 +33,57 @@ class _QuizScreenState extends State<QuizScreen> {
     setState(() {
       _opcaoSelecionada = index;
       _respondeu = true;
-      if (correta) _acertos++;
+      if (correta) {
+        _acertos++;
+        _sequenciaAtual++;
+        if (_sequenciaAtual > _maiorSequencia) _maiorSequencia = _sequenciaAtual;
+      } else {
+        _sequenciaAtual = 0;
+      }
     });
   }
 
-  void _proxima() {
-  final ultima = _perguntaAtual == widget.modulo.quiz.length - 1;
+  Future<void> _proxima() async {
+    final ultima = _perguntaAtual == widget.modulo.quiz.length - 1;
 
-  if (ultima) {
-    context.read<ProgressoProvider>().marcarConcluido(widget.modulo.numero);
+    if (ultima) {
+      await _finalizarQuiz();
+    } else {
+      setState(() {
+        _perguntaAtual++;
+        _opcaoSelecionada = null;
+        _respondeu = false;
+      });
+    }
+  }
+
+  Future<void> _finalizarQuiz() async {
+    final progresso = context.read<ProgressoProvider>();
+    final total = widget.modulo.quiz.length;
+    final acertouTudo = _acertos == total;
+
+    final xpGanho = _acertos * 10 + (acertouTudo ? 30 : 0);
+    await progresso.adicionarXp(xpGanho);
+    await progresso.marcarConcluido(widget.modulo.numero);
+
+    final novasConquistas = <String>[];
+
+    if (_maiorSequencia >= 3 && await progresso.desbloquearConquista('sequencia_3')) {
+      novasConquistas.add('sequencia_3');
+    }
+    if (acertouTudo && await progresso.desbloquearConquista('perfeccionista')) {
+      novasConquistas.add('perfeccionista');
+    }
+
+    if (!mounted) return;
     setState(() => _finalizado = true);
-  } else {
-    setState(() {
-      _perguntaAtual++;
-      _opcaoSelecionada = null;
-      _respondeu = false;
-    });
+
+    for (final id in novasConquistas) {
+      if (!mounted) return;
+      final conquista = todasConquistas.firstWhere((c) => c.id == id);
+      await mostrarConquistaDesbloqueada(context, conquista);
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -109,8 +147,7 @@ class _QuizScreenState extends State<QuizScreen> {
                       onTap: () => _responder(index),
                       title: Text(pergunta.opcoes[index]),
                       trailing: icone != null
-                          ? Icon(icone,
-                              color: correta ? Colors.green : Colors.red)
+                          ? Icon(icone, color: correta ? Colors.green : Colors.red)
                           : null,
                     ),
                   );
@@ -138,6 +175,7 @@ class _QuizScreenState extends State<QuizScreen> {
   Widget _buildResultado(BuildContext context) {
     final total = widget.modulo.quiz.length;
     final percentual = (_acertos / total * 100).round();
+    final xpGanho = _acertos * 10 + (_acertos == total ? 30 : 0);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Resultado')),
@@ -157,6 +195,15 @@ class _QuizScreenState extends State<QuizScreen> {
                 'Você acertou $_acertos de $total ($percentual%)',
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                '+$xpGanho XP',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.amber.shade800,
+                ),
               ),
               const SizedBox(height: 8),
               Text(

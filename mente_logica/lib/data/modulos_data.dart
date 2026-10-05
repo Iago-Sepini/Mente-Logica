@@ -26,6 +26,31 @@ final List<Modulo> modulosMenteLogica = [
         opcoes: ['Um sensor', 'Uma placa de prototipagem', 'Um tipo de motor', 'Um software'],
         respostaCorretaIndex: 1,
       ),
+      PerguntaQuiz(
+        pergunta: 'Qual área de conhecimento NÃO faz parte da robótica?',
+        opcoes: ['Eletrônica', 'Mecânica', 'Programação', 'Culinária'],
+        respostaCorretaIndex: 3,
+      ),
+      PerguntaQuiz(
+        pergunta: 'Como o código é transferido do computador para o Arduino?',
+        opcoes: [
+          'Por Bluetooth automaticamente',
+          'Por um cabo USB, usando a IDE do Arduino',
+          'Escrevendo diretamente na placa',
+          'Não é possível transferir código',
+        ],
+        respostaCorretaIndex: 1,
+      ),
+      PerguntaQuiz(
+        pergunta: 'Qual é a principal vantagem de usar uma placa como o Arduino em projetos de robótica?',
+        opcoes: [
+          'Ela substitui o computador por completo',
+          'Ela permite ler sensores e controlar componentes com poucas linhas de código',
+          'Ela não precisa de programação',
+          'Ela só funciona com peças da própria marca',
+        ],
+        respostaCorretaIndex: 1,
+      ),
     ],
   ),
   Modulo(
@@ -50,6 +75,36 @@ final List<Modulo> modulosMenteLogica = [
       PerguntaQuiz(
         pergunta: 'Para que serve um laço de repetição?',
         opcoes: ['Guardar dados', 'Repetir um bloco de código', 'Ligar um LED', 'Medir temperatura'],
+        respostaCorretaIndex: 1,
+      ),
+      PerguntaQuiz(
+        pergunta: 'O que é uma variável em programação?',
+        opcoes: [
+          'Um tipo de sensor',
+          'Um espaço para guardar informações que podem mudar',
+          'Um comando que liga o Arduino',
+          'Um componente eletrônico',
+        ],
+        respostaCorretaIndex: 1,
+      ),
+      PerguntaQuiz(
+        pergunta: 'Quando usamos uma estrutura "if/else" no código?',
+        opcoes: [
+          'Quando queremos repetir uma ação várias vezes',
+          'Quando queremos guardar um valor fixo',
+          'Quando o código precisa tomar uma decisão entre duas opções',
+          'Quando queremos desligar o Arduino',
+        ],
+        respostaCorretaIndex: 2,
+      ),
+      PerguntaQuiz(
+        pergunta: 'Qual a diferença principal entre um laço "for" e um "while"?',
+        opcoes: [
+          'Não existe diferença, são a mesma coisa',
+          'O "for" é usado quando já se sabe quantas vezes repetir, o "while" repete enquanto uma condição for verdadeira',
+          'O "while" só funciona com números negativos',
+          'O "for" só pode ser usado uma vez por programa',
+        ],
         respostaCorretaIndex: 1,
       ),
     ],
@@ -78,6 +133,26 @@ final List<Modulo> modulosMenteLogica = [
         opcoes: ['Aumentar a luz', 'Controlar a corrente', 'Guardar energia', 'Emitir som'],
         respostaCorretaIndex: 1,
       ),
+      PerguntaQuiz(
+        pergunta: 'O que acontece se um LED for ligado sem resistor?',
+        opcoes: [
+          'Nada, ele funciona normalmente',
+          'Ele pode queimar por excesso de corrente',
+          'Ele fica mais brilhante e dura mais',
+          'Ele muda de cor',
+        ],
+        respostaCorretaIndex: 1,
+      ),
+      PerguntaQuiz(
+        pergunta: 'Um sensor de presença (PIR) detecta o quê?',
+        opcoes: ['Som', 'Luminosidade', 'Movimento/calor de pessoas ou animais', 'Umidade do ar'],
+        respostaCorretaIndex: 2,
+      ),
+      PerguntaQuiz(
+        pergunta: 'Qual componente é usado para medir a temperatura do ambiente em um projeto Arduino?',
+        opcoes: ['Resistor', 'LED', 'Sensor de temperatura', 'Botão'],
+        respostaCorretaIndex: 2,
+      ),
     ],
   ),
   Modulo(
@@ -102,6 +177,31 @@ final List<Modulo> modulosMenteLogica = [
       PerguntaQuiz(
         pergunta: 'Qual função roda continuamente no Arduino?',
         opcoes: ['setup()', 'loop()', 'main()', 'start()'],
+        respostaCorretaIndex: 1,
+      ),
+      PerguntaQuiz(
+        pergunta: 'Para que serve a função setup()?',
+        opcoes: [
+          'Para rodar o código em loop infinito',
+          'Para configurar algo que só precisa rodar uma vez, como definir pinos',
+          'Para ler sensores continuamente',
+          'Ela não existe no Arduino',
+        ],
+        respostaCorretaIndex: 1,
+      ),
+      PerguntaQuiz(
+        pergunta: 'Qual comando é usado para ligar ou desligar um LED em um pino digital?',
+        opcoes: ['analogRead()', 'digitalWrite()', 'delay()', 'Serial.print()'],
+        respostaCorretaIndex: 1,
+      ),
+      PerguntaQuiz(
+        pergunta: 'Qual a diferença entre leitura digital e leitura analógica?',
+        opcoes: [
+          'Não existe diferença',
+          'A digital só identifica dois estados (ligado/desligado), a analógica lê uma faixa de valores',
+          'A analógica só funciona com LEDs',
+          'A digital é mais lenta que a analógica',
+        ],
         respostaCorretaIndex: 1,
       ),
     ],
@@ -135,6 +235,26 @@ final List<Modulo> modulosMenteLogica = [
         pergunta: 'Qual componente detecta movimento no projeto de alarme?',
         opcoes: ['LED', 'Resistor', 'Sensor PIR', 'Buzzer'],
         respostaCorretaIndex: 2,
+      ),
+      PerguntaQuiz(
+        pergunta: 'No projeto Pisca-Pisca, qual função cria o intervalo entre ligar e desligar o LED?',
+        opcoes: ['digitalWrite()', 'delay()', 'pinMode()', 'analogWrite()'],
+        respostaCorretaIndex: 1,
+      ),
+      PerguntaQuiz(
+        pergunta: 'Quantos LEDs são usados no projeto do Semáforo Inteligente?',
+        opcoes: ['1', '2', '3', '4'],
+        respostaCorretaIndex: 2,
+      ),
+      PerguntaQuiz(
+        pergunta: 'No projeto de alarme, o que normalmente é acionado quando o sensor PIR detecta movimento?',
+        opcoes: [
+          'Um buzzer ou LED de alerta',
+          'O Arduino desliga sozinho',
+          'Um motor DC gira indefinidamente',
+          'Nada acontece sem um botão',
+        ],
+        respostaCorretaIndex: 0,
       ),
     ],
   ),

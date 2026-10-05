@@ -17,10 +17,12 @@ class HomeScreen extends StatelessWidget {
         title: const Text('Mente Lógica'),
         centerTitle: false,
         actions: [
-          IconButton(
-            tooltip: 'Reiniciar progresso',
-            icon: const Icon(Icons.restart_alt),
-            onPressed: () => context.read<ProgressoProvider>().resetarProgresso(),
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: Chip(
+              avatar: const Icon(Icons.bolt, size: 18, color: Colors.amber),
+              label: Text('Nível ${context.watch<ProgressoProvider>().nivel}'),
+            ),
           ),
         ],
       ),
